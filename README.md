@@ -298,7 +298,7 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-battery-info">Get-BatteryInfo</a></td>        
     </tr>
     <tr>
-        <th rowspan="5"></th>
+        <th rowspan="7"></th>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-computer-info">Get-ComputerInfo</a></td>
     </tr>
     <tr>
