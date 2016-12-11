@@ -34,7 +34,7 @@
       <td style="padding:6px"><strong>Description:</strong></td>
       <td style="padding:6px">Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) to retrieve a list of some HotFixIDs installed on the computer and displays the results in console (Method 1). A secondary CSV-file (<code>partial_hotfix_list.csv</code>), which contains the output of the Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code>) with the query path of <code>win32_quickfixengineering</code> (which gives about the same partial results as the "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>" command used previously in Method 1), is written to <code>$path</code> (Method 2).
       <br />
-      <br />Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3) to retrieve a third - comprehensive - list of all the installed and uninstalled Windows updates and displays those results in a pop-up window and writes them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</td>
+      <br />Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3) to retrieve a third – comprehensive – list of all the installed and uninstalled Windows updates and displays those results in a pop-up window and writes them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</td>
    </tr>
    <tr>
       <td style="padding:6px"><strong>Homepage:</strong></td>
