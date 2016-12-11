@@ -1,15 +1,17 @@
 <!-- Visual Studio Code: For a more comfortable reading experience, use the key combination Ctrl + Shift + V
-     Visual Studio Code: To crop the tailing end space characters out, please use the key combination Ctrl + Shift + X
+     Visual Studio Code: To crop the tailing end space characters out, please use the key combination Ctrl + A Ctrl + K Ctrl + X (Formerly Ctrl + Shift + X)
      Visual Studio Code: To improve the formatting of HTML code, press Shift + Alt + F and the selected area will be reformatted in a html file.
+     Visual Studio Code shortcuts: http://code.visualstudio.com/docs/customization/keybindings (or https://aka.ms/vscodekeybindings)
+     Visual Studio Code shortcut PDF (Windows): https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf
 
 
-   _____      _        _____           _        _ _          ___          ___           _                   _    _           _       _            
-  / ____|    | |      |_   _|         | |      | | |        | \ \        / (_)         | |                 | |  | |         | |     | |           
- | |  __  ___| |_ ______| |  _ __  ___| |_ __ _| | | ___  __| |\ \  /\  / / _ _ __   __| | _____      _____| |  | |_ __   __| | __ _| |_ ___  ___ 
+   _____      _        _____           _        _ _          ___          ___           _                   _    _           _       _
+  / ____|    | |      |_   _|         | |      | | |        | \ \        / (_)         | |                 | |  | |         | |     | |
+ | |  __  ___| |_ ______| |  _ __  ___| |_ __ _| | | ___  __| |\ \  /\  / / _ _ __   __| | _____      _____| |  | |_ __   __| | __ _| |_ ___  ___
  | | |_ |/ _ \ __|______| | | '_ \/ __| __/ _` | | |/ _ \/ _` | \ \/  \/ / | | '_ \ / _` |/ _ \ \ /\ / / __| |  | | '_ \ / _` |/ _` | __/ _ \/ __|
  | |__| |  __/ |_      _| |_| | | \__ \ || (_| | | |  __/ (_| |  \  /\  /  | | | | | (_| | (_) \ V  V /\__ \ |__| | |_) | (_| | (_| | ||  __/\__ \
   \_____|\___|\__|    |_____|_| |_|___/\__\__,_|_|_|\___|\__,_|   \/  \/   |_|_| |_|\__,_|\___/ \_/\_/ |___/\____/| .__/ \__,_|\__,_|\__\___||___/
-                                                                                                                  | |                             
+                                                                                                                  | |
                                                                                                                   |_|                                     -->
 
 
@@ -30,15 +32,18 @@
    </tr>
    <tr>
       <td style="padding:6px"><strong>Description:</strong></td>
-      <td style="padding:6px">Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) to retrieve a list of some HotFixIDs installed on the computer and displays the results in console. Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API to retrieve another list of all the installed Windows updates and displays those results in a pop-up window and writes them to a CSV-file. This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</td>
+      <td style="padding:6px">Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) to retrieve a list of some HotFixIDs installed on the computer and displays the results in console (Method 1). A secondary CSV-file (<code>partial_hotfix_list.csv</code>), which contains the output of the Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code>) with the query path of <code>win32_quickfixengineering</code> (which gives about the same partial results as the "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>" command used previously in Method 1), is written to <code>$path</code> (Method 2).
+      <br />
+      <br />Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3) to retrieve a third - comprehensive - list of all the installed and uninstalled Windows updates and displays those results in a pop-up window and writes them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</td>
    </tr>
    <tr>
       <td style="padding:6px"><strong>Homepage:</strong></td>
-      <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates">https://github.com/auberginehill/get-installed-windows-updates</a></td>
+      <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates">https://github.com/auberginehill/get-installed-windows-updates</a>
+      <br />Short URL: <a href="http://tinyurl.com/gtcktwy">http://tinyurl.com/gtcktwy</a></td>
    </tr>
    <tr>
       <td style="padding:6px"><strong>Version:</strong></td>
-      <td style="padding:6px">1.0</td>
+      <td style="padding:6px">1.1</td>
    </tr>
    <tr>
         <td style="padding:6px"><strong>Sources:</strong></td>
@@ -46,8 +51,16 @@
             <table>
                 <tr>
                     <td style="padding:6px">Emojis:</td>
-                    <td style="padding:6px"><a href="https://api.github.com/emojis">https://api.github.com/emojis</a></td>
+                    <td style="padding:6px"><a href="https://github.com/auberginehill/emoji-table">Emoji Table</a></td>
+                </tr>
                 <tr>
+                    <td style="padding:6px">Microsoft TechNet:</td>
+                    <td style="padding:6px"><a href="http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx">How to List All of the Windows and Software Updates Applied to a Computer</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">ScriptingGuy1:</td>
+                    <td style="padding:6px"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/">How Can I Tell Which Service Packs Have Been Installed on a Computer?</a></td>
+                </tr>
                 </tr>
                     <td style="padding:6px">Stéphane van Gulick:</td>
                     <td style="padding:6px"><a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a></td>
@@ -79,7 +92,7 @@
         <th>:arrow_right:</th>
         <td style="padding:6px">
             <ul>
-                <li>Displays a partial list of installed HotFixIDs in console and a list of all installed Windows updates in a pop-up window "$WindowsUpdates_selection" (Out-GridView).</li>
+                <li>Displays a partial list of installed HotFixIDs in console and a list of all installed Windows updates in a pop-up window "<code>$windows_updates_sorted_selection</code>" (<code>Out-GridView</code>).</li>
             </ul>
         </td>
     </tr>
@@ -88,7 +101,7 @@
         <td style="padding:6px">
             <ul>
                 <p>
-                    <li>A pop-up window (Out-GridView):</li>
+                    <li>A pop-up window (<code>Out-GridView</code>):</li>
                 </p>
                 <ol>
                     <p>
@@ -98,14 +111,14 @@
                                 <td style="padding:6px"><strong>Description</strong></td>
                             </tr>
                             <tr>
-                                <td style="padding:6px">$WindowsUpdates_selection</a></td>
+                                <td style="padding:6px">$windows_updates_sorted_selection</a></td>
                                 <td style="padding:6px">Displays a list of installed Windows updates</td>
                             </tr>
                         </table>
                     </p>
                 </ol>
                 <p>
-                    <li>And also one CSV-file at $path.</li>
+                    <li>And also two CSV-files at <code>$path</code>.</li>
                 </p>
                 <ol>
                     <p>
@@ -114,6 +127,11 @@
                                 <td style="padding:6px"><strong>Path</strong></td>
                                 <td style="padding:6px"><strong>Type</strong></td>
                                 <td style="padding:6px"><strong>Name</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px"><code>$env:temp\partial_hotfix_list.csv</code></td>
+                                <td style="padding:6px">CSV-file</td>
+                                <td style="padding:6px"><code>partial_hotfix_list.csv</code></td>
                             </tr>
                             <tr>
                                 <td style="padding:6px"><code>$env:temp\installed_windows_updates.csv</code></td>
@@ -138,7 +156,7 @@
         <th>:warning:</th>
         <td style="padding:6px">
             <ul>
-                <li>Please note that the file is created in a directory, which is specified with the <code>$path</code> variable (at line 6).</li>
+                <li>Please note that the files are created in a directory, which is specified with the <code>$path</code> variable (at line 7).</li>
             </ul>
         </td>
     </tr>
@@ -165,6 +183,7 @@
         </td>
     </tr>
 </table>
+
 
 
 
@@ -220,7 +239,7 @@
                                     </table>
                                 </ol>
                         </p>
-                    <p>For more information, please type "<code>help Set-ExecutionPolicy -Full</code>" or visit <a href="https://technet.microsoft.com/en-us/library/hh849812.aspx">Set-ExecutionPolicy</a>.</p>
+                    <p>For more information, please type "<code>Get-ExecutionPolicy -List</code>" or "<code>help Set-ExecutionPolicy -Full</code>" or visit <a href="https://technet.microsoft.com/en-us/library/hh849812.aspx">Set-ExecutionPolicy</a>.</p>
                     </li>
                 </p>
                 <p>
@@ -268,7 +287,13 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates">Script Homepage</a></td>
     </tr>
     <tr>
-        <th rowspan="8"></th>
+        <th rowspan="18"></th>
+        <td style="padding:6px">Microsoft TechNet: <a href="http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx">How to List All of the Windows and Software Updates Applied to a Computer</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px">ScriptingGuy1: <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/">How Can I Tell Which Service Packs Have Been Installed on a Computer?</a></td>
+    </tr>
+    <tr>
         <td style="padding:6px">Stéphane van Gulick: <a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a></td>
     </tr>
     <tr>
@@ -290,6 +315,30 @@
         <td style="padding:6px"><a href="https://msdn.microsoft.com/en-us/library/aa387287(v=VS.85).aspx">Using the Windows Update Agent API</a></td>
     </tr>
     <tr>
+        <td style="padding:6px"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa387095(v=vs.85).aspx">OperationResultCode enumeration</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa387280(v=vs.85).aspx">ServerSelection enumeration</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa387282(v=vs.85).aspx">UpdateOperation enumeration</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa386400(v=vs.85).aspx">IUpdateHistoryEntry interface</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://technet.microsoft.com/en-us/library/ee692804.aspx">The String's the Thing</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://technet.microsoft.com/en-us/library/ee835740.aspx">Dig Deep into your system with Dedicated System Information Tools in Windows 7</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="http://superuser.com/questions/1002015/why-are-get-hotfix-and-wmic-qfe-list-in-powershell-missing-installed-updates">Why are "get-hotfix" and "wmic qfe list" in Powershell missing installed updates?</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://answers.microsoft.com/en-us/windows/forum/windowsrt8_1-windows_update/why-is-there-a-daily-update-for-english-input/83352bfe-86df-4a3b-9886-24c1a9401b78?page=3&msgId=53a108e7-7fef-47e2-87e5-78588d9090ca">Why is there a DAILY update for English Input Personalization Dictionary</a></td>
+    </tr>
+    <tr>
         <td style="padding:6px">ASCII Art: <a href="http://www.figlet.org/">http://www.figlet.org/</a> and <a href="http://www.network-science.de/ascii/">ASCII Art Text Generator</a></td>
     </tr>
 </table>
@@ -302,10 +351,16 @@
  <table>
     <tr>
         <th><img class="emoji" title="www" alt="www" height="28" width="28" align="absmiddle" src="https://assets-cdn.github.com/images/icons/emoji/unicode/0023-20e3.png"></th>
-        <td style="padding:6px"><a href="https://github.com/auberginehill/get-battery-info">Get-BatteryInfo</a></td>        
+        <td style="padding:6px"><a href="https://github.com/auberginehill/firefox-customization-files">Firefox Customization Files</a></td>
     </tr>
     <tr>
-        <th rowspan="7"></th>
+        <th rowspan="15"></th>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/get-ascii-table">Get-AsciiTable</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/get-battery-info">Get-BatteryInfo</a></td>
+    </tr>
+    <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-computer-info">Get-ComputerInfo</a></td>
     </tr>
     <tr>
@@ -321,10 +376,27 @@
         <td style="padding:6px"><a href="https://gist.github.com/auberginehill/eb07d0c781c09ea868123bf519374ee8">Get-TimeDifference</a></td>
     </tr>
     <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/get-time-zone-table">Get-TimeZoneTable</a></td>
+    </tr>
+    <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-unused-drive-letters">Get-UnusedDriveLetters</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/emoji-table">Emoji Table</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/java-update">Java-Update</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/rock-paper-scissors">Rock-Paper-Scissors</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/toss-a-coin">Toss-a-Coin</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/update-adobe-flash-player">Update-AdobeFlashPlayer</a></td>
     </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/update-mozilla-firefox">Update-MozillaFirefox</a></td>
+    </tr>    
 </table>
-
