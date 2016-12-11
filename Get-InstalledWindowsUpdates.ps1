@@ -369,9 +369,10 @@ Display the help file.
 
 .EXAMPLE
 Set-ExecutionPolicy remotesigned
-This command is altering the Windows PowerShell rights to enable script execution. Windows PowerShell
-has to be run with elevated rights (run as an administrator) to actually be able to change the script
-execution properties. The default value is "Set-ExecutionPolicy restricted".
+This command is altering the Windows PowerShell rights to enable script execution for 
+the default (LocalMachine) scope. Windows PowerShell has to be run with elevated rights 
+(run as an administrator) to actually be able to change the script execution properties. 
+The default value of the default (LocalMachine) scope is "Set-ExecutionPolicy restricted".
 
 
     Parameters:
