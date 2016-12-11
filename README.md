@@ -111,7 +111,7 @@
                                 <td style="padding:6px"><strong>Description</strong></td>
                             </tr>
                             <tr>
-                                <td style="padding:6px">$windows_updates_sorted_selection</a></td>
+                                <td style="padding:6px"><code>$windows_updates_sorted_selection</code></td>
                                 <td style="padding:6px">Displays a list of installed Windows updates</td>
                             </tr>
                         </table>
