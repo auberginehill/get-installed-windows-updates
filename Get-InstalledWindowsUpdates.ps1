@@ -402,14 +402,19 @@ The default value of the default (LocalMachine) scope is "Set-ExecutionPolicy re
                     Policy scope.
 
 
-For more information, please type "Get-ExecutionPolicy -List" or "help Set-ExecutionPolicy -Full"
-or visit https://technet.microsoft.com/en-us/library/hh849812.aspx.
+For more information, please type "Get-ExecutionPolicy -List", "help Set-ExecutionPolicy -Full",
+"help about_Execution_Policies" or visit https://technet.microsoft.com/en-us/library/hh849812.aspx
+or http://go.microsoft.com/fwlink/?LinkID=135170.
 
 .EXAMPLE
 New-Item -ItemType File -Path C:\Temp\Get-InstalledWindowsUpdates.ps1
 Creates an empty ps1-file to the C:\Temp directory. The New-Item cmdlet has an inherent -NoClobber mode
 built into it, so that the procedure will halt, if overwriting (replacing the contents) of an existing
-file is about to happen. Overwriting a file with the New-Item cmdlet requires using the Force.
+file is about to happen. Overwriting a file with the New-Item cmdlet requires using the Force. If the
+path name includes space characters, please enclose the path name in quotation marks (single or double):
+
+    New-Item -ItemType File -Path "C:\Folder Name\Get-InstalledWindowsUpdates.ps1"
+
 For more information, please type "help New-Item -Full".
 
 .LINK
