@@ -261,6 +261,11 @@ $windows_updates_sorted_selection | Export-Csv $path\installed_windows_updates.c
 
 
 
+# Open the Installed Windows Updates location
+# Source: http://winaero.com/blog/the-most-comprehensive-list-of-shell-locations-in-windows-8/
+Start-Process explorer.exe "shell:::{d450a8a1-9568-45c7-9c0e-b4f9fb4537bd}"
+
+
 # Write the installed Windows updates to a HTML-file
 $windows_updates_sorted_selection | ConvertTo-Html | Out-File -FilePath $path\installed_windows_updates.html
 
