@@ -186,14 +186,19 @@ $install_history = $searcher.QueryHistory(0, $number_of_history_events)
                 $raw_year = ($raw_date).Split("/")[2]
                 $event_timestamp = (Get-Date -Day $raw_day -Month $raw_month -Year $raw_year)
 
-                # Add a HotFixID (KB-value) to the data                                       # Credit: Stephane van Gulick: "Get-WindowsUpdates"
-                $regex = $kb_related_event.Title -match "KB\d*"
-                $hotfix_id = $Matches[0]
-                    If ($hotfix_id.ToLower().Contains("KB".ToLower())) {
-                        $number = [int]$hotfix_id.ToLower().Replace("kb","")
-                    } Else {
-                        $continue = $true
-                    } # Else
+                # Add a HotFixID (KB-value) to the data                                       # Credit: Stephane van Gulick: "Get-WindowsUpdates" and Anna Wang: "Cannot index into a null array"
+                If ($kb_related_event.Title -match "KB\d*") {
+
+                            $hotfix_id = $Matches[0]   
+                            If ($hotfix_id.ToLower().Contains("KB".ToLower())) {
+                                $number = [int]$hotfix_id.ToLower().Replace("kb","")
+                            } Else {
+                                $continue = $true
+                            } # Else
+
+                } Else {
+                    $continue = $true
+                } # Else
 
 
                             $all_windows_updates += New-Object -TypeName PSCustomObject -Property @{
@@ -293,7 +298,8 @@ $time = Get-Date -Format g                                                      
 
 http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx          # Microsoft TechNet: "How to List All of the Windows and Software Updates Applied to a Computer"
 https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/                    # ScriptingGuy1: "How Can I Tell Which Service Packs Have Been Installed on a Computer?"
-https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43                             # Stephane van Gulick: "Get-WindowsUpdates"
+https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43                                                                                       # Stephane van Gulick: "Get-WindowsUpdates"
+https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell         # Anna Wang: "Cannot index into a null array"
 
 
   _    _      _
@@ -362,7 +368,7 @@ http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-locatio
 
     Homepage:           https://github.com/auberginehill/get-installed-windows-updates
     Short URL:          http://tinyurl.com/gtcktwy
-    Version:            1.1
+    Version:            1.2
 
 .EXAMPLE
 ./Get-InstalledWindowsUpdates
@@ -421,6 +427,7 @@ For more information, please type "help New-Item -Full".
 http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx
 https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/
 https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43
+https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell         # Anna Wang: "Cannot index into a null array"
 https://gallery.technet.microsoft.com/ScriptCenter/d86cd93b-2428-40a1-a430-26bd3caed36f/
 http://blog.powershell.no/2010/06/25/manage-windows-update-installations-using-windows-powershell/
 http://blog.crayon.no/blogs/janegil/archive/2010/06/25/manage_2D00_windows_2D00_update_2D00_installations_2D00_using_2D00_windows_2D00_powershell.aspx
