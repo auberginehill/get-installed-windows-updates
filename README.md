@@ -43,7 +43,7 @@
    </tr>
    <tr>
       <td style="padding:6px"><strong>Version:</strong></td>
-      <td style="padding:6px">1.1</td>
+      <td style="padding:6px">1.2</td>
    </tr>
    <tr>
         <td style="padding:6px"><strong>Sources:</strong></td>
@@ -61,6 +61,10 @@
                     <td style="padding:6px">ScriptingGuy1:</td>
                     <td style="padding:6px"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/">How Can I Tell Which Service Packs Have Been Installed on a Computer?</a></td>
                 </tr>
+                <tr>
+                    <td style="padding:6px">Anna Wang:</td>
+                    <td style="padding:6px"><a href="https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell">Cannot index into a null array</a></td>
+                </tr> 
                 </tr>
                     <td style="padding:6px">Stéphane van Gulick:</td>
                     <td style="padding:6px"><a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a></td>
@@ -290,11 +294,14 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates">Script Homepage</a></td>
     </tr>
     <tr>
-        <th rowspan="18"></th>
+        <th rowspan="19"></th>
         <td style="padding:6px">Microsoft TechNet: <a href="http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx">How to List All of the Windows and Software Updates Applied to a Computer</a></td>
     </tr>
     <tr>
         <td style="padding:6px">ScriptingGuy1: <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/">How Can I Tell Which Service Packs Have Been Installed on a Computer?</a></td>
+     </tr>
+     <tr>
+        <td style="padding:6px">Anna Wang: <a href="https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell">Cannot index into a null array</a></td>
     </tr>
     <tr>
         <td style="padding:6px">Stéphane van Gulick: <a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a></td>
