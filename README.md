@@ -364,7 +364,7 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/firefox-customization-files">Firefox Customization Files</a></td>
     </tr>
     <tr>
-        <th rowspan="16"></th>
+        <th rowspan="19"></th>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-ascii-table">Get-AsciiTable</a></td>
     </tr>
     <tr>
@@ -383,6 +383,12 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-programs">Get-InstalledPrograms</a></td>
     </tr>
     <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/get-powershell-aliases-table">Get-PowerShellAliasesTable</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://gist.github.com/auberginehill/9c2f26146a0c9d3d1f30ef0395b6e6f5">Get-PowerShellSpecialFolders</a></td>
+    </tr>
+    <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-ram-info">Get-RAMInfo</a></td>
     </tr>
     <tr>
@@ -399,6 +405,9 @@
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/java-update">Java-Update</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://gist.github.com/auberginehill/176774de38ebb3234b633c5fbc6f9e41">Rename-Files</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/rock-paper-scissors">Rock-Paper-Scissors</a></td>
