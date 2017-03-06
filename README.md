@@ -32,11 +32,12 @@
     </tr>
     <tr>
         <td style="padding:6px"><strong>Description:</strong></td>
-        <td colspan="2" style="padding:6px"><p>Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) to retrieve a list of some HotFixIDs installed on the computer and displays the results in console (Method 1). A secondary CSV-file (<code>partial_hotfix_list.csv</code>),
-            which contains the output of the Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code>) with the query path of <code>win32_quickfixengineering</code> (which gives about the same partial results as the "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>"
-            command used previously in Method 1), is written to <code>$path</code> (Method 2).</p>
-<p>Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3) to retrieve a third – comprehensive – list of all the installed and uninstalled Windows updates and displays those results in a pop-up window and writes
-            them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</p></td>
+        <td colspan="2" style="padding:6px">
+            <p>
+                Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) (with a command "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>") to retrieve a list of some HotFixIDs installed on a local machine and displays the results in console (Method 1). The Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code> with the query path of <code>win32_quickfixengineering</code>) is then used to write a secondary CSV-file (<code>partial_hotfix_list.csv</code>) to <code>$path</code> (Method 2) – this secondary CSV-file (populated by <code>WMIC.exe</code>) contains about the same partial results as which were obtained by using the previous query (Method 1).</p>
+            <p>
+                Finally, Get-InstalledWindowsUpdates uses Windows Update Agent (WUA) API (Method 3) to retrieve a third – comprehensive – list of all the installed and uninstalled Windows updates, and displays those results in a pop-up window and writes them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</p>
+        </td>
     </tr>
     <tr>
         <td style="padding:6px"><strong>Homepage:</strong></td>
@@ -155,7 +156,7 @@
         <th>:warning:</th>
         <td style="padding:6px">
             <ul>
-                <li>Please note that the files are created in a directory, which is specified with the <code>$path</code> variable (at line 7).</li>
+                <li>Please note that the files are created in a directory, which is specified with the <code>$path</code> variable (at line 10).</li>
             </ul>
         </td>
     </tr>
@@ -208,7 +209,7 @@
                 </p>
                 <p>
                     <li><p><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine</code><br />
-                    This command is altering the Windows PowerShell rights to enable script execution in the default (<code>LocalMachine</code>) scope, and defines the conditions under which Windows PowerShell loads configuration files and runs scripts in general. In Windows Vista and later versions of Windows, for running commands that change the execution policy of the <code>LocalMachine</code> scope, Windows PowerShell has to be run with elevated rights (<dfn>Run as Administrator</dfn>). The default policy of the default (<code>LocalMachine</code>) scope is "<code>Restricted</code>", and a command "<code>Set-ExecutionPolicy Restricted</code>" will "<dfn>undo</dfn>" the changes made with the original example above (had the policy not been changed before). Execution policies for the local computer (<code>LocalMachine</code>) and for the current user (<code>CurrentUser</code>) are stored in the registry (at for instance the <code>HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ExecutionPolicy</code> key), and remain effective until they are changed again. The execution policy for a particular session (<code>Process</code>) is stored only in memory, and is discarded when the session is closed.</p>
+                    This command is altering the Windows PowerShell rights to enable script execution in the default (<code>LocalMachine</code>) scope, and defines the conditions under which Windows PowerShell loads configuration files and runs scripts in general. In Windows Vista and later versions of Windows, for running commands that change the execution policy of the <code>LocalMachine</code> scope, Windows PowerShell has to be run with elevated rights (<dfn>Run as Administrator</dfn>). The default policy of the default (<code>LocalMachine</code>) scope is "<code>Restricted</code>", and a command "<code>Set-ExecutionPolicy Restricted</code>" will "<dfn>undo</dfn>" the changes made with the original example above (had the policy not been changed before...). Execution policies for the local computer (<code>LocalMachine</code>) and for the current user (<code>CurrentUser</code>) are stored in the registry (at for instance the <code>HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ExecutionPolicy</code> key), and remain effective until they are changed again. The execution policy for a particular session (<code>Process</code>) is stored only in memory, and is discarded when the session is closed.</p>
                         <p>Parameters:
                             <ul>
                                 <table>
@@ -240,7 +241,7 @@
                                         <td style="padding:6px; border-top-width:1px; border-top-style:solid;"><span style="font-size: 95%">Notes:</span></td>
                                         <td colspan="2" style="padding:6px">
                                             <ul>
-                                                <li><span style="font-size: 95%">Please note, that the Group Policy setting "<code>Turn on Script Execution</code>" overrides the execution policies set in Windows PowerShell in all scopes. To find this ("<dfn>master</dfn>") setting, please, for example, open the Local Group Policy Editor (<code>gpedit.msc</code>) and navigate to Computer Configuration → Administrative Templates → Windows Components → Windows PowerShell.</span></li>
+                                                <li><span style="font-size: 95%">Please note that the Group Policy setting "<code>Turn on Script Execution</code>" overrides the execution policies set in Windows PowerShell in all scopes. To find this ("<dfn>master</dfn>") setting, please, for example, open the Local Group Policy Editor (<code>gpedit.msc</code>) and navigate to Computer Configuration → Administrative Templates → Windows Components → Windows PowerShell.</span></li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -248,7 +249,7 @@
                                         <th></th>
                                         <td colspan="2" style="padding:6px">
                                             <ul>
-                                                <li><span style="font-size: 95%">The Local Group Policy Editor (<code>gpedit.msc</code>) is not available in any Home or Starter editions of Windows.</span></li>                                            
+                                                <li><span style="font-size: 95%">The Local Group Policy Editor (<code>gpedit.msc</code>) is not available in any Home or Starter editions of Windows.</span></li>
                                                 <ol>
                                                     <p>
                                                         <table>
@@ -265,15 +266,15 @@
                                                                 <td style="padding:6px; font-size: 85%"><code>Restricted</code></td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> - Allow only signed scripts</td>
+                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> – Allow only signed scripts</td>
                                                                 <td style="padding:6px; font-size: 85%"><code>AllSigned</code></td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> - Allow local scripts and remote signed scripts</td>
+                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> – Allow local scripts and remote signed scripts</td>
                                                                 <td style="padding:6px; font-size: 85%"><code>RemoteSigned</code></td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> - Allow all scripts</td>
+                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> – Allow all scripts</td>
                                                                 <td style="padding:6px; font-size: 85%"><code>Unrestricted</code></td>
                                                             </tr>
                                                         </table>
@@ -290,7 +291,7 @@
                 </p>
                 <p>
                     <li><code>New-Item -ItemType File -Path C:\Temp\Get-InstalledWindowsUpdates.ps1</code><br />
-                    Creates an empty ps1-file to the <code>C:\Temp</code> directory. The <code>New-Item</code> cmdlet has an inherent <code>-NoClobber</code> mode built into it, so that the procedure will halt, if overwriting (replacing the contents) of an existing file is about to happen. Overwriting a file with the <code>New-Item</code> cmdlet requires using the <code>Force</code>. If the path name includes space characters, please enclose the path name in quotation marks (single or double):
+                    Creates an empty ps1-file to the <code>C:\Temp</code> directory. The <code>New-Item</code> cmdlet has an inherent <code>-NoClobber</code> mode built into it, so that the procedure will halt, if overwriting (replacing the contents) of an existing file is about to happen. Overwriting a file with the <code>New-Item</code> cmdlet requires using the <code>Force</code>. If the path name and/or the filename includes space characters, please enclose the whole <code>-Path</code> parameter value in quotation marks (single or double):
                         <ol>
                             <br /><code>New-Item -ItemType File -Path "C:\Folder Name\Get-InstalledWindowsUpdates.ps1"</code>
                         </ol>
@@ -306,24 +307,22 @@
 
 ### Contributing
 
-<p>Find a bug? Have a feature request? Here is how you can contribute to this project:</p>
-
- <table>
-   <tr>
-      <th><img class="emoji" title="contributing" alt="contributing" height="28" width="28" align="absmiddle" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f33f.png"></th>
-      <td style="padding:6px"><strong>Bugs:</strong></td>
-      <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates/issues">Submit bugs</a> and help us verify fixes.</td>
-   </tr>
-   <tr>
-      <th rowspan="2"></th>
-      <td style="padding:6px"><strong>Feature Requests:</strong></td>
-      <td style="padding:6px">Feature request can be submitted by <a href="https://github.com/auberginehill/get-installed-windows-updates/issues">creating an Issue</a>.</td>
-   </tr>
-   <tr>
-      <td style="padding:6px"><strong>Edit Source Files:</strong></td>
-      <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates/pulls">Submit pull requests</a> for bug fixes and features and discuss existing proposals.</td>
-   </tr>
- </table>
+<table>
+    <tr>
+        <th><img class="emoji" title="contributing" alt="contributing" height="28" width="28" align="absmiddle" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f33f.png"></th>
+        <td style="padding:6px"><strong>Bugs:</strong></td>
+        <td style="padding:6px">Bugs can be reported by creating a new <a href="https://github.com/auberginehill/get-installed-windows-updates/issues">issue</a>.</td>
+    </tr>
+    <tr>
+        <th rowspan="2"></th>
+        <td style="padding:6px"><strong>Feature Requests:</strong></td>
+        <td style="padding:6px">Feature request can be submitted by creating a new <a href="https://github.com/auberginehill/get-installed-windows-updates/issues">issue</a>.</td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><strong>Editing the Source Files:</strong></td>
+        <td style="padding:6px">The new features, fixes and other potential changes can be discussed further by opening a new <a href="https://github.com/auberginehill/get-installed-windows-updates/pulls">pull request</a>.</td>
+    </tr>
+</table>
 
 
 
