@@ -335,23 +335,23 @@ https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cf
 <#
 
 .SYNOPSIS
-Retrieves a list of all installed Windows updates.
+Retrieves a list of all installed Windows updates on a local machine.
 
 .DESCRIPTION
-Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) to
-retrieve a list of some HotFixIDs installed on the computer and displays the
-results in console (Method 1). A secondary CSV-file (partial_hotfix_list.csv),
-which contains the output of the Windows Management Instrumentation Command-Line
-Utility (WMIC.exe) with the query path of win32_quickfixengineering (which gives
-about the same partial results as the
-"Get-WmiObject -Class Win32_QuickFixEngineering" command used previously in
-Method 1), is written to $path (Method 2).
+Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) (with
+a command "Get-WmiObject -Class Win32_QuickFixEngineering") to retrieve a list of
+some HotFixIDs installed on a local machine and displays the results in console
+(Method 1). The Windows Management Instrumentation Command-Line Utility (WMIC.exe
+with the query path of win32_quickfixengineering) is then used to write a secondary
+CSV-file (partial_hotfix_list.csv) to $path (Method 2) - this secondary CSV-file
+(populated by WMIC.exe) contains about the same partial results as which were
+obtained by using the previous query (Method 1).
 
-Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3)
+Finally, Get-InstalledWindowsUpdates uses Windows Update Agent (WUA) API (Method 3)
 to retrieve a third - comprehensive - list of all the installed and uninstalled
-Windows updates and displays those results in a pop-up window and writes them to a
-CSV-file (installed_windows_updates.csv). This script is based on Stephane van
-Gulick's PowerShell function "Get-WindowsUpdates"
+Windows updates, and displays those results in a pop-up window and writes them to
+a CSV-file (installed_windows_updates.csv). This script is based on Stéphane
+van Gulick's PowerShell function "Get-WindowsUpdates"
 (https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43).
 
 .OUTPUTS
@@ -406,7 +406,7 @@ and later versions of Windows, for running commands that change the execution po
 of the LocalMachine scope, Windows PowerShell has to be run with elevated rights
 (Run as Administrator). The default policy of the default (LocalMachine) scope is
 "Restricted", and a command "Set-ExecutionPolicy Restricted" will "undo" the changes
-made with the original example above (had the policy not been changed before).
+made with the original example above (had the policy not been changed before...).
 Execution policies for the local computer (LocalMachine) and for the current user
 (CurrentUser) are stored in the registry (at for instance the
 HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ExecutionPolicy key), and remain
@@ -451,7 +451,7 @@ effective until they are changed again. The execution policy for a particular se
                     remove the ("master") execution policy that is set with a Group
                     Policy setting.
     __________
-    Notes: 	      - Please note, that the Group Policy setting "Turn on Script Execution"
+    Notes: 	      - Please note that the Group Policy setting "Turn on Script Execution"
                     overrides the execution policies set in Windows PowerShell in all
                     scopes. To find this ("master") setting, please, for example, open
                     the Local Group Policy Editor (gpedit.msc) and navigate to
@@ -463,12 +463,12 @@ effective until they are changed again. The execution policy for a particular se
 
                   - Group Policy setting "Turn on Script Execution":
 
-                    Not configured 	                                        : No effect, the default
+               	    Not configured                                          : No effect, the default
                                                                                value of this setting
-                    Disabled 	                                            : Restricted
-                    Enabled - Allow only signed scripts 	                : AllSigned
+                    Disabled                                                : Restricted
+                    Enabled - Allow only signed scripts                     : AllSigned
                     Enabled - Allow local scripts and remote signed scripts : RemoteSigned
-                    Enabled - Allow all scripts 	                        : Unrestricted
+                    Enabled - Allow all scripts                             : Unrestricted
 
 
 For more information, please type "Get-ExecutionPolicy -List", "help Set-ExecutionPolicy -Full",
@@ -477,10 +477,12 @@ or http://go.microsoft.com/fwlink/?LinkID=135170.
 
 .EXAMPLE
 New-Item -ItemType File -Path C:\Temp\Get-InstalledWindowsUpdates.ps1
-Creates an empty ps1-file to the C:\Temp directory. The New-Item cmdlet has an inherent -NoClobber mode
-built into it, so that the procedure will halt, if overwriting (replacing the contents) of an existing
-file is about to happen. Overwriting a file with the New-Item cmdlet requires using the Force. If the
-path name includes space characters, please enclose the path name in quotation marks (single or double):
+Creates an empty ps1-file to the C:\Temp directory. The New-Item cmdlet has an inherent
+-NoClobber mode built into it, so that the procedure will halt, if overwriting (replacing
+the contents) of an existing file is about to happen. Overwriting a file with the New-Item
+cmdlet requires using the Force. If the path name and/or the filename includes space
+characters, please enclose the whole -Path parameter value in quotation marks (single or
+double):
 
     New-Item -ItemType File -Path "C:\Folder Name\Get-InstalledWindowsUpdates.ps1"
 
