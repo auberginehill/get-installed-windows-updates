@@ -92,7 +92,7 @@
         <th>:arrow_right:</th>
         <td style="padding:6px">
             <ul>
-                <li>Displays a partial list of installed HotFixIDs in console and a list of all installed Windows updates in a pop-up window "<code>$windows_updates_sorted_selection</code>" (<code>Out-GridView</code>). Also writes two CSV-files at $path.</li>
+                <li>Displays a partial list of installed HotFixIDs in console and a list of all installed Windows updates in a pop-up window "<code>$windows_updates_sorted_selection</code>" (<code>Out-GridView</code>). Also writes two CSV-files at <code>$path</code>.</li>
             </ul>
         </td>
     </tr>
@@ -171,11 +171,11 @@
                     <br />
                     <br />may be used at the PowerShell prompt window <code>[PS&gt;]</code>. To change the temp folder for instance to <code>C:\Temp</code>, please, for example, follow the instructions at <a href="http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html">Temporary Files Folder - Change Location in Windows</a>, which in essence are something along the lines:
                         <ol>
-                           <li>Right click on Computer and click on Properties (or select Start → Control Panel → System). In the resulting window with the basic information about the computer...</li>
-                           <li>Click on Advanced system settings on the left panel and select Advanced tab on the resulting pop-up window.</li>
+                           <li>Right click Computer icon and select Properties (or select Start → Control Panel → System. On Windows 10 this instance may also be found by right clicking Start and selecting Control Panel → System... or by pressing <code>[Win-key]</code> + X and selecting Control Panel → System). On the window with basic information about the computer...</li>
+                           <li>Click on Advanced system settings on the left panel and select Advanced tab on the "System Properties" pop-up window.</li>
                            <li>Click on the button near the bottom labeled Environment Variables.</li>
                            <li>In the topmost section labeled User variables both TMP and TEMP may be seen. Each different login account is assigned its own temporary locations. These values can be changed by double clicking a value or by highlighting a value and selecting Edit. The specified path will be used by Windows and many other programs for temporary files. It's advisable to set the same value (a directory path) for both TMP and TEMP.</li>
-                           <li>Any running programs need to be restarted for the new values to take effect. In fact, probably also Windows itself needs to be restarted for it to begin using the new values for its own temporary files.</li>
+                           <li>Any running programs need to be restarted for the new values to take effect. In fact, probably Windows itself needs to be restarted for it to begin using the new values for its own temporary files.</li>
                         </ol>
                     </li>
                 </p>
