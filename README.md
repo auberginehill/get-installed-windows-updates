@@ -18,65 +18,60 @@
 ## Get-InstalledWindowsUpdates.ps1
 
 <table>
-   <tr>
-      <td style="padding:6px"><strong>OS:</strong></td>
-      <td style="padding:6px">Windows</td>
-   </tr>
-   <tr>
-      <td style="padding:6px"><strong>Type:</strong></td>
-      <td style="padding:6px">A Windows PowerShell script</td>
-   </tr>
-   <tr>
-      <td style="padding:6px"><strong>Language:</strong></td>
-      <td style="padding:6px">Windows PowerShell</td>
-   </tr>
-   <tr>
-      <td style="padding:6px"><strong>Description:</strong></td>
-      <td style="padding:6px">Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) to retrieve a list of some HotFixIDs installed on the computer and displays the results in console (Method 1). A secondary CSV-file (<code>partial_hotfix_list.csv</code>), which contains the output of the Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code>) with the query path of <code>win32_quickfixengineering</code> (which gives about the same partial results as the "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>" command used previously in Method 1), is written to <code>$path</code> (Method 2).
-      <br />
-      <br />Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3) to retrieve a third – comprehensive – list of all the installed and uninstalled Windows updates and displays those results in a pop-up window and writes them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</td>
-   </tr>
-   <tr>
-      <td style="padding:6px"><strong>Homepage:</strong></td>
-      <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates">https://github.com/auberginehill/get-installed-windows-updates</a>
-      <br />Short URL: <a href="http://tinyurl.com/gtcktwy">http://tinyurl.com/gtcktwy</a></td>
-   </tr>
-   <tr>
-      <td style="padding:6px"><strong>Version:</strong></td>
-      <td style="padding:6px">1.2</td>
-   </tr>
-   <tr>
-        <td style="padding:6px"><strong>Sources:</strong></td>
-        <td style="padding:6px">
-            <table>
-                <tr>
-                    <td style="padding:6px">Emojis:</td>
-                    <td style="padding:6px"><a href="https://github.com/auberginehill/emoji-table">Emoji Table</a></td>
-                </tr>
-                <tr>
-                    <td style="padding:6px">Microsoft TechNet:</td>
-                    <td style="padding:6px"><a href="http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx">How to List All of the Windows and Software Updates Applied to a Computer</a></td>
-                </tr>
-                <tr>
-                    <td style="padding:6px">ScriptingGuy1:</td>
-                    <td style="padding:6px"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/">How Can I Tell Which Service Packs Have Been Installed on a Computer?</a></td>
-                </tr>
-                <tr>
-                    <td style="padding:6px">Anna Wang:</td>
-                    <td style="padding:6px"><a href="https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell">Cannot index into a null array</a></td>
-                </tr> 
-                </tr>
-                    <td style="padding:6px">Stéphane van Gulick:</td>
-                    <td style="padding:6px"><a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a></td>
-                <tr>
-                </tr>
-            </table>
-        </td>
-   </tr>
-   <tr>
-      <td style="padding:6px"><strong>Downloads:</strong></td>
-      <td style="padding:6px">For instance <a href="https://raw.githubusercontent.com/auberginehill/get-installed-windows-updates/master/Get-InstalledWindowsUpdates.ps1">Get-InstalledWindowsUpdates.ps1</a>. Or <a href="https://github.com/auberginehill/get-installed-windows-updates/archive/master.zip">everything as a .zip-file</a>.</td>
-   </tr>
+    <tr>
+        <td style="padding:6px"><strong>OS:</strong></td>
+        <td colspan="2" style="padding:6px">Windows</td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><strong>Type:</strong></td>
+        <td colspan="2" style="padding:6px">A Windows PowerShell script</td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><strong>Language:</strong></td>
+        <td colspan="2" style="padding:6px">Windows PowerShell</td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><strong>Description:</strong></td>
+        <td colspan="2" style="padding:6px"><p>Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) to retrieve a list of some HotFixIDs installed on the computer and displays the results in console (Method 1). A secondary CSV-file (<code>partial_hotfix_list.csv</code>),
+            which contains the output of the Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code>) with the query path of <code>win32_quickfixengineering</code> (which gives about the same partial results as the "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>"
+            command used previously in Method 1), is written to <code>$path</code> (Method 2).</p>
+<p>Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3) to retrieve a third – comprehensive – list of all the installed and uninstalled Windows updates and displays those results in a pop-up window and writes
+            them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</p></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><strong>Homepage:</strong></td>
+        <td colspan="2" style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates">https://github.com/auberginehill/get-installed-windows-updates</a>
+            <br />Short URL: <a href="http://tinyurl.com/gtcktwy">http://tinyurl.com/gtcktwy</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><strong>Version:</strong></td>
+        <td colspan="2" style="padding:6px">1.3</td>
+    </tr>
+    <tr>
+        <td rowspan="5" style="padding:6px"><strong>Sources:</strong></td>
+        <td style="padding:6px">Emojis:</td>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/emoji-table">Emoji Table</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px">Microsoft TechNet:</td>
+        <td style="padding:6px"><a href="http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx">How to List All of the Windows and Software Updates Applied to a Computer</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px">ScriptingGuy1:</td>
+        <td style="padding:6px"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/">How Can I Tell Which Service Packs Have Been Installed on a Computer?</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px">Anna Wang:</td>
+        <td style="padding:6px"><a href="https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell">Cannot index into a null array</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px">Stéphane van Gulick:</td>
+        <td style="padding:6px"><a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><strong>Downloads:</strong></td>
+        <td colspan="2" style="padding:6px">For instance <a href="https://raw.githubusercontent.com/auberginehill/get-installed-windows-updates/master/Get-InstalledWindowsUpdates.ps1">Get-InstalledWindowsUpdates.ps1</a>. Or <a href="https://github.com/auberginehill/get-installed-windows-updates/archive/master.zip">everything as a .zip-file</a>.</td>
+    </tr>
 </table>
 
 
@@ -173,7 +168,7 @@
                     <br />
                     <br /><code>[System.IO.Path]::GetTempPath()</code>
                     <br />
-                    <br />may be used at the PowerShell prompt window <code>[PS>]</code>. To change the temp folder for instance to <code>C:\Temp</code>, please, for example, follow the instructions at <a href="http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html">Temporary Files Folder - Change Location in Windows</a>, which in essence are something along the lines:
+                    <br />may be used at the PowerShell prompt window <code>[PS&gt;]</code>. To change the temp folder for instance to <code>C:\Temp</code>, please, for example, follow the instructions at <a href="http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html">Temporary Files Folder - Change Location in Windows</a>, which in essence are something along the lines:
                         <ol>
                            <li>Right click on Computer and click on Properties (or select Start → Control Panel → System). In the resulting window with the basic information about the computer...</li>
                            <li>Click on Advanced system settings on the left panel and select Advanced tab on the resulting pop-up window.</li>
@@ -205,43 +200,90 @@
             <ol>
                 <p>
                     <li><code>./Get-InstalledWindowsUpdates</code><br />
-                    Run the script. Please notice to insert <code>./</code> or <code>.\</code> before the script name.</li>
+                    Runs the script. Please notice to insert <code>./</code> or <code>.\</code> before the script name.</li>
                 </p>
                 <p>
                     <li><code>help ./Get-InstalledWindowsUpdates -Full</code><br />
-                    Display the help file.</li>
+                    Displays the help file.</li>
+                </p>
                 <p>
-                    <li><p><code>Set-ExecutionPolicy remotesigned</code><br />
-                    This command is altering the Windows PowerShell rights to enable script execution for the default (LocalMachine) scope. Windows PowerShell has to be run with elevated rights (run as an administrator) to actually be able to change the script execution properties. The default value of the default (LocalMachine) scope is "<code>Set-ExecutionPolicy restricted</code>".</p>
+                    <li><p><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine</code><br />
+                    This command is altering the Windows PowerShell rights to enable script execution in the default (<code>LocalMachine</code>) scope, and defines the conditions under which Windows PowerShell loads configuration files and runs scripts in general. In Windows Vista and later versions of Windows, for running commands that change the execution policy of the <code>LocalMachine</code> scope, Windows PowerShell has to be run with elevated rights (<dfn>Run as Administrator</dfn>). The default policy of the default (<code>LocalMachine</code>) scope is "<code>Restricted</code>", and a command "<code>Set-ExecutionPolicy Restricted</code>" will "<dfn>undo</dfn>" the changes made with the original example above (had the policy not been changed before). Execution policies for the local computer (<code>LocalMachine</code>) and for the current user (<code>CurrentUser</code>) are stored in the registry (at for instance the <code>HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ExecutionPolicy</code> key), and remain effective until they are changed again. The execution policy for a particular session (<code>Process</code>) is stored only in memory, and is discarded when the session is closed.</p>
                         <p>Parameters:
-                                <ol>
-                                    <table>
-                                        <tr>
-                                            <td style="padding:6px"><code>Restricted</code></td>
-                                            <td style="padding:6px">Does not load configuration files or run scripts. Restricted is the default execution policy.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:6px"><code>AllSigned</code></td>
-                                            <td style="padding:6px">Requires that all scripts and configuration files be signed by a trusted publisher, including scripts that you write on the local computer.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:6px"><code>RemoteSigned</code></td>
-                                            <td style="padding:6px">Requires that all scripts and configuration files downloaded from the Internet be signed by a trusted publisher.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:6px"><code>Unrestricted</code></td>
-                                            <td style="padding:6px">Loads all configuration files and runs all scripts. If you run an unsigned script that was downloaded from the Internet, you are prompted for permission before it runs.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:6px"><code>Bypass</code></td>
-                                            <td style="padding:6px">Nothing is blocked and there are no warnings or prompts.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:6px"><code>Undefined</code></td>
-                                            <td style="padding:6px">Removes the currently assigned execution policy from the current scope. This parameter will not remove an execution policy that is set in a Group Policy scope.</td>
-                                        </tr>
-                                    </table>
-                                </ol>
+                            <ul>
+                                <table>
+                                    <tr>
+                                        <td style="padding:6px"><code>Restricted</code></td>
+                                        <td colspan="2" style="padding:6px">Does not load configuration files or run scripts, but permits individual commands. <code>Restricted</code> is the default execution policy.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:6px"><code>AllSigned</code></td>
+                                        <td colspan="2" style="padding:6px">Scripts can run. Requires that all scripts and configuration files be signed by a trusted publisher, including the scripts that have been written on the local computer. Risks running signed, but malicious, scripts.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:6px"><code>RemoteSigned</code></td>
+                                        <td colspan="2" style="padding:6px">Requires a digital signature from a trusted publisher on scripts and configuration files that are downloaded from the Internet (including e-mail and instant messaging programs). Does not require digital signatures on scripts that have been written on the local computer. Permits running unsigned scripts that are downloaded from the Internet, if the scripts are unblocked by using the <code>Unblock-File</code> cmdlet. Risks running unsigned scripts from sources other than the Internet and signed, but malicious, scripts.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:6px"><code>Unrestricted</code></td>
+                                        <td colspan="2" style="padding:6px">Loads all configuration files and runs all scripts. Warns the user before running scripts and configuration files that are downloaded from the Internet. Not only risks, but actually permits, eventually, running any unsigned scripts from any source. Risks running malicious scripts.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:6px"><code>Bypass</code></td>
+                                        <td colspan="2" style="padding:6px">Nothing is blocked and there are no warnings or prompts. Not only risks, but actually permits running any unsigned scripts from any source. Risks running malicious scripts.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:6px"><code>Undefined</code></td>
+                                        <td colspan="2" style="padding:6px">Removes the currently assigned execution policy from the current scope. If the execution policy in all scopes is set to <code>Undefined</code>, the effective execution policy is <code>Restricted</code>, which is the default execution policy. This parameter will not alter or remove the ("<dfn>master</dfn>") execution policy that is set with a Group Policy setting.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:6px; border-top-width:1px; border-top-style:solid;"><span style="font-size: 95%">Notes:</span></td>
+                                        <td colspan="2" style="padding:6px">
+                                            <ul>
+                                                <li><span style="font-size: 95%">Please note, that the Group Policy setting "<code>Turn on Script Execution</code>" overrides the execution policies set in Windows PowerShell in all scopes. To find this ("<dfn>master</dfn>") setting, please, for example, open the Local Group Policy Editor (<code>gpedit.msc</code>) and navigate to Computer Configuration → Administrative Templates → Windows Components → Windows PowerShell.</span></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <td colspan="2" style="padding:6px">
+                                            <ul>
+                                                <li><span style="font-size: 95%">The Local Group Policy Editor (<code>gpedit.msc</code>) is not available in any Home or Starter editions of Windows.</span></li>                                            
+                                                <ol>
+                                                    <p>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="padding:6px; font-size: 85%"><strong>Group Policy Setting</strong> "<code>Turn&nbsp;on&nbsp;Script&nbsp;Execution</code>"</td>
+                                                                <td style="padding:6px; font-size: 85%"><strong>PowerShell Equivalent</strong> (concerning all scopes)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding:6px; font-size: 85%"><code>Not configured</code></td>
+                                                                <td style="padding:6px; font-size: 85%">No effect, the default value of this setting</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding:6px; font-size: 85%"><code>Disabled</code></td>
+                                                                <td style="padding:6px; font-size: 85%"><code>Restricted</code></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> - Allow only signed scripts</td>
+                                                                <td style="padding:6px; font-size: 85%"><code>AllSigned</code></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> - Allow local scripts and remote signed scripts</td>
+                                                                <td style="padding:6px; font-size: 85%"><code>RemoteSigned</code></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="padding:6px; font-size: 85%"><code>Enabled</code> - Allow all scripts</td>
+                                                                <td style="padding:6px; font-size: 85%"><code>Unrestricted</code></td>
+                                                            </tr>
+                                                        </table>
+                                                    </p>
+                                                </ol>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ul>
                         </p>
                     <p>For more information, please type "<code>Get-ExecutionPolicy -List</code>", "<code>help Set-ExecutionPolicy -Full</code>", "<code>help about_Execution_Policies</code>" or visit <a href="https://technet.microsoft.com/en-us/library/hh849812.aspx">Set-ExecutionPolicy</a> or <a href="http://go.microsoft.com/fwlink/?LinkID=135170">about_Execution_Policies</a>.</p>
                     </li>
@@ -294,7 +336,7 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-windows-updates">Script Homepage</a></td>
     </tr>
     <tr>
-        <th rowspan="19"></th>
+        <th rowspan="20"></th>
         <td style="padding:6px">Microsoft TechNet: <a href="http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx">How to List All of the Windows and Software Updates Applied to a Computer</a></td>
     </tr>
     <tr>
@@ -317,6 +359,9 @@
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://blogs.technet.microsoft.com/jamesone/2009/01/27/managing-windows-update-with-powershell/">Managing Windows Update with PowerShell</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="http://powershellcookbook.com/recipe/qAxK/appendix-b-regular-expression-reference">Appendix B. Regular Expression Reference</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="http://www.ehow.com/how_8724332_use-powershell-run-windows-updates.html">How to Use PowerShell to Run Windows Updates</a></td>
@@ -358,13 +403,14 @@
 
 ### Related scripts
 
+
  <table>
     <tr>
         <th><img class="emoji" title="www" alt="www" height="28" width="28" align="absmiddle" src="https://assets-cdn.github.com/images/icons/emoji/unicode/0023-20e3.png"></th>
         <td style="padding:6px"><a href="https://gist.github.com/auberginehill/aa812bfa79fa19fbd880b97bdc22e2c1">Disable-Defrag</a></td>
     </tr>
     <tr>
-        <th rowspan="22"></th>
+        <th rowspan="26"></th>
         <td style="padding:6px"><a href="https://github.com/auberginehill/firefox-customization-files">Firefox Customization Files</a></td>
     </tr>
     <tr>
@@ -381,6 +427,9 @@
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-directory-size">Get-DirectorySize</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/get-hash-value">Get-HashValue</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-installed-programs">Get-InstalledPrograms</a></td>
@@ -404,17 +453,23 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-unused-drive-letters">Get-UnusedDriveLetters</a></td>
     </tr>
     <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/get-windows-10-lock-screen-wallpapers">Get-Windows10LockScreenWallpapers</a></td>
+    </tr>
+    <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/emoji-table">Emoji Table</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/java-update">Java-Update</a></td>
     </tr>
     <tr>
-        <td style="padding:6px"><a href="https://gist.github.com/auberginehill/13bb9f56dc0882bf5e85a8f88ccd4610">Remove-EmptyFoldersLite</a></td>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/remove-duplicate-files">Remove-DuplicateFiles</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/remove-empty-folders">Remove-EmptyFolders</a></td>
-    </tr>    
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://gist.github.com/auberginehill/13bb9f56dc0882bf5e85a8f88ccd4610">Remove-EmptyFoldersLite</a></td>
+    </tr>
     <tr>
         <td style="padding:6px"><a href="https://gist.github.com/auberginehill/176774de38ebb3234b633c5fbc6f9e41">Rename-Files</a></td>
     </tr>
@@ -423,6 +478,9 @@
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/toss-a-coin">Toss-a-Coin</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/unzip-silently">Unzip-Silently</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/update-adobe-flash-player">Update-AdobeFlashPlayer</a></td>
