@@ -373,7 +373,7 @@ $env:temp\installed_windows_updates.csv      : CSV-file     : installed_windows_
 
 .NOTES
 Please note that the files are created in a directory, which is specified with the
-$path variable (at line 7). The $env:temp variable points to the current temp
+$path variable (at line 10). The $env:temp variable points to the current temp
 folder. The default value of the $env:temp variable is
 C:\Users\<username>\AppData\Local\Temp (i.e. each user account has their own
 separate temp folder at path %USERPROFILE%\AppData\Local\Temp). To see the current
