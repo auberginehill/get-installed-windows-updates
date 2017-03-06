@@ -34,7 +34,7 @@
         <td style="padding:6px"><strong>Description:</strong></td>
         <td colspan="2" style="padding:6px">
             <p>
-                Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) (with a command "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>") to retrieve a list of some HotFixIDs installed on a local machine and displays the results in console (Method 1). The Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code> with the query path of <code>win32_quickfixengineering</code>) is then used to write a secondary CSV-file (<code>partial_hotfix_list.csv</code>) to <code>$path</code> (Method 2) – this secondary CSV-file (populated by <code>WMIC.exe</code>) contains about the same partial results as which were obtained by using the previous query (Method 1).</p>
+                Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI, with a command "<code>Get-WmiObject -Class Win32_QuickFixEngineering</code>" (Method 1)) to retrieve a list of some HotFixIDs installed on a local machine and displays the results in console. The Windows Management Instrumentation Command-Line Utility (<code>WMIC.exe</code> with the query path of <code>win32_quickfixengineering</code> (Method 2)) is then used to write a secondary CSV-file (<code>partial_hotfix_list.csv</code>) to <code>$path</code> – this secondary CSV-file populated by <code>WMIC.exe</code> contains about the same partial results as which were obtained by using the previous Method 1.</p>
             <p>
                 Finally, Get-InstalledWindowsUpdates uses Windows Update Agent (WUA) API (Method 3) to retrieve a third – comprehensive – list of all the installed and uninstalled Windows updates, and displays those results in a pop-up window and writes them to a CSV-file (<code>installed_windows_updates.csv</code>). This script is based on Stéphane van Gulick's PowerShell function "<a href="https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43">Get-WindowsUpdates</a>".</p>
         </td>
@@ -92,7 +92,7 @@
         <th>:arrow_right:</th>
         <td style="padding:6px">
             <ul>
-                <li>Displays a partial list of installed HotFixIDs in console and a list of all installed Windows updates in a pop-up window "<code>$windows_updates_sorted_selection</code>" (<code>Out-GridView</code>).</li>
+                <li>Displays a partial list of installed HotFixIDs in console and a list of all installed Windows updates in a pop-up window "<code>$windows_updates_sorted_selection</code>" (<code>Out-GridView</code>). Also writes two CSV-files at $path.</li>
             </ul>
         </td>
     </tr>
@@ -319,8 +319,8 @@
         <td style="padding:6px">Feature request can be submitted by creating a new <a href="https://github.com/auberginehill/get-installed-windows-updates/issues">issue</a>.</td>
     </tr>
     <tr>
-        <td style="padding:6px"><strong>Editing the Source Files:</strong></td>
-        <td style="padding:6px">The new features, fixes and other potential changes can be discussed further by opening a new <a href="https://github.com/auberginehill/get-installed-windows-updates/pulls">pull request</a>.</td>
+        <td style="padding:6px"><strong>Editing Source Files:</strong></td>
+        <td style="padding:6px">New features, fixes and other potential changes can be discussed further by opening a new <a href="https://github.com/auberginehill/get-installed-windows-updates/pulls">pull request</a>.</td>
     </tr>
 </table>
 
