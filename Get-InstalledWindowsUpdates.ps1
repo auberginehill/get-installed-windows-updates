@@ -4,54 +4,18 @@ Get-InstalledWindowsUpdates.ps1
 
 
 # Set the common parameters
+# Source: https://msdn.microsoft.com/en-us/library/windows/desktop/aa387095(v=vs.85).aspx
+# Source: https://msdn.microsoft.com/en-us/library/windows/desktop/aa387280(v=vs.85).aspx
+$ErrorActionPreference = "Stop"
 $path = $env:temp
 $computer = $env:COMPUTERNAME
 $timestamp_today = Get-Date
 $empty_line = ""
 $some_windows_updates = @()
 $all_windows_updates = @()
-
-
-# Function used to convert Windows Update Result Codes (numbers) to text
-# Source: https://msdn.microsoft.com/en-us/library/windows/desktop/aa387095(v=vs.85).aspx
-function Get-ResultCodeText {
-    param($result_code_number)
-    If ($result_code_number -eq 0) {
-        [string]'Not Started'
-    } ElseIf ($result_code_number -eq 1) {
-        [string]'In Progress'
-    } ElseIf ($result_code_number -eq 2) {
-        [string]'Succeeded'
-    } ElseIf ($result_code_number -eq 3) {
-        [string]'Succeeded With Errors'
-    } ElseIf ($result_code_number -eq 4) {
-        [string]'Failed'
-    } ElseIf ($result_code_number -eq 5) {
-        [string]'Aborted'
-    } Else {
-        [string]''
-    } # else
-} # function
-
-
-# Function used to convert Windows Update Server Selection Codes (numbers) to text
-# Source: https://msdn.microsoft.com/en-us/library/windows/desktop/aa387280(v=vs.85).aspx
-function Get-ServerSelectionText {
-    param($server_selection_number)
-    If ($server_selection_number -eq 0) {
-        [string]'Default'
-    } ElseIf ($server_selection_number -eq 1) {
-        [string]'Managed Server'
-    } ElseIf ($server_selection_number -eq 2) {
-        [string]'Windows Update'
-    } ElseIf ($server_selection_number -eq 3) {
-        [string]'Other'
-    } Else {
-        [string]''
-    } # else
-} # function
-
-
+$hotfix_hive = @()
+$result_code = @{ 0 = "Not Started"; 1 = "In Progress"; 2 = "Succeeded" ; 3 = "Succeeded With Errors"; 4 = "Failed"; 5 = "Aborted" }
+$server_selection = @{ 0 = "Default"; 1 = "Managed Server"; 2 = "Windows Update"; 3 = "Other" }
 
 
 # Display a welcoming screen in console
@@ -67,10 +31,38 @@ $coline | Out-String
 
 # Method 1
 # Windows Management Instrumentation: Get-WmiObject -Class Win32_QuickFixEngineering
-# Display a partial list of HotFixIDs in console with WMI
-$HotFixIDs = Get-WmiObject -Class Win32_QuickFixEngineering -ComputerName $computer | Sort HotFixID | Format-Table -Property @{ Label="HotFixID"; Width=15; Expression={ $_.HotFixID } }, @{ Label="Type"; Width=21; Expression={ $_.Description } }, @{ Label="Support URL"; Width=60; Expression={ $_.Caption } }, @{ Label="Install Date"; Width=15; Expression={ ($_.InstalledOn).ToShortDateString() } }
-$HotFixIDs
-$HotFixIDs | Measure-Object | Select-Object @{ Label="Total"; Expression={ $_.Count } }
+$hotfix_repo = Get-WmiObject -Class Win32_QuickFixEngineering -ComputerName $computer
+
+        ForEach ($hotfix in $hotfix_repo) {
+
+                $original_date_value = ($hotfix.Properties | where { $_.Name -like "*InstalledOn*" } | Select-Object -ExpandProperty Value)
+                $month_qfe = ($original_date_value).Split("/")[0]
+                $day_qfe = ($original_date_value).Split("/")[1]
+                $year_qfe = ($original_date_value).Split("/")[2]
+                $date_qfe = (Get-Date -Day $day_qfe -Month $month_qfe -Year $year_qfe)
+
+                        $hotfix_hive += $obj_hotfix = New-Object -TypeName PSCustomObject -Property @{
+
+                            'Computer'                  = $hotfix.CSName
+                            'HotFixID'                  = $hotfix.HotFixID
+                            'Type'                      = $hotfix.Description
+                            'Support URL'               = $hotfix.Caption
+                            'Install Date'              = ($date_qfe.ToShortDateString())
+
+                        } # New-Object
+
+        } # ForEach $hotfix
+
+
+# Display a partial list of HotFixIDs in console
+# $hotfix_hive_selection | Sort HotFixID | Format-Table -AutoSize -Wrap
+$hotfix_hive.PSObject.TypeNames.Insert(0,"Windows Updates (Win32_QuickFixEngineering)")
+$hotfix_hive_selection = $hotfix_hive | Select-Object 'HotFixID','Type','Support URL','Install Date'
+$hotfix_hive_selection | Sort HotFixID | Format-Table -Property @{ Label = "HotFixID"; Expression = { $_.HotFixID }; Width = 15 },
+                @{ Label = "Type";           Expression = { $_.Type};                                               Width = 21 },
+                @{ Label = "Support URL";    Expression = { $_ | Select-Object -ExpandProperty 'Support URL' };     Width = 60 },
+                @{ Label = "Install Date";   Expression = { $_ | Select-Object -ExpandProperty 'Install Date' };    Width = 15 }
+Write-Output $hotfix_hive | Measure-Object | Select-Object @{ Label = "Total"; Expression = { $_.Count }}
 
 
 
@@ -83,20 +75,25 @@ $HotFixIDs | Measure-Object | Select-Object @{ Label="Total"; Expression={ $_.Co
 # wmic qfe list full /format:htable > hotfix_full.html
 # wmic qfe list full /format:csv > hotfix_full.csv
 # wmic qfe list full /format:xml > hotfix_full.xml
-# Invoke-Command -ScriptBlock { wmic qfe list full /format:csv } | ConvertFrom-Csv | Export-Csv hotfix_full.csv -Delimiter ";" -NoTypeInformation -Encoding UTF8
+# Invoke-Command -ScriptBlock { wmic qfe list full /format:csv } | ConvertFrom-Csv | Export-Csv "hotfix_full.csv" -Delimiter ";" -NoTypeInformation -Encoding UTF8
 
 <#
         Invoke-Command -ScriptBlock { wmic qfe list full /format:csv > temp.csv } | Out-Null
-        Get-Content -Path temp.csv | Where-Object { $_ -ne "" } | ConvertFrom-Csv | Export-Csv hotfix_full.csv -Delimiter ";" -NoTypeInformation -Encoding UTF8
+        Get-Content -Path temp.csv | Where-Object { $_ -ne "" } | ConvertFrom-Csv | Export-Csv "hotfix_full.csv" -Delimiter ";" -NoTypeInformation -Encoding UTF8
         Remove-Item -Path temp.csv
         Import-Csv hotfix_full.csv -Delimiter ";"
 #>
 
+#   \S      Any nonwhitespace character (excludes space, tab and carriage return).
+#   \d      Any decimal digit.
+# Source: http://powershellcookbook.com/recipe/qAxK/appendix-b-regular-expression-reference
 # Source: https://technet.microsoft.com/en-us/library/ee835740.aspx
 # Source: http://superuser.com/questions/1002015/why-are-get-hotfix-and-wmic-qfe-list-in-powershell-missing-installed-updates
 # Source: http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx
-
+Write-Verbose "Invoking the second method (wmic)..."
 $wmic = Invoke-Command -ScriptBlock { wmic qfe list full /format:csv } | ConvertFrom-Csv
+
+If ($wmic -match '\S') {
 
         ForEach ($hotfix_item in $wmic) {
 
@@ -112,8 +109,7 @@ $wmic = Invoke-Command -ScriptBlock { wmic qfe list full /format:csv } | Convert
                         $continue = $true
                     } # Else
 
-
-                            $some_windows_updates += New-Object -TypeName PSCustomObject -Property @{
+                            $some_windows_updates += $obj_update = New-Object -TypeName PSCustomObject -Property @{
 
                                 'Computer'                  = $hotfix_item.CSName
                                 'HotFixID'                  = $hotfix_item.HotFixID
@@ -124,7 +120,7 @@ $wmic = Invoke-Command -ScriptBlock { wmic qfe list full /format:csv } | Convert
                                 'Day'                       = $day
                                 'Month'                     = $month
                                 'Year'                      = $year
-                                'Day Of Week'               = (Get-Date $date).DayOfWeek
+                                'Weekday'                   = (Get-Date $date).DayOfWeek
                                 'Age (Days)'                = ($timestamp_today - $date).Days
                                 'install_date_original'     = $hotfix_item.InstallDate
                                 'Installed By'              = $hotfix_item.InstalledBy
@@ -134,16 +130,24 @@ $wmic = Invoke-Command -ScriptBlock { wmic qfe list full /format:csv } | Convert
                                 'Name'                      = $hotfix_item.Name
                                 'In Effect'                 = $hotfix_item.ServicePackInEffect
                                 'Status'                    = $hotfix_item.Status
+                                'Node'                      = $hotfix_item.Node
                                 'Number'                    = $plain_number
                             } # New-Object
 
         } # ForEach $hotfix_item
 
 
-# Write the partial list of installed Windows updates to a CSV-file (a secondary basic file)
-$some_windows_updates.PSObject.TypeNames.Insert(0,"Windows Updates (wmic)")
-$some_windows_updates_selection = $some_windows_updates | Select-Object 'Computer','HotFixID','Type','Install Date','Installed On','installed_on_original','Day','Month','Year','Day Of Week','Age (Days)','install_date_original','Installed By','Support URL','Custom URL','Comments','Name','In Effect','Status','Number'
-$some_windows_updates_selection | Sort 'Number','Age (Days)' | Export-Csv $path\partial_hotfix_list.csv -Delimiter ";" -NoTypeInformation -Encoding UTF8
+    # Write the partial list of installed Windows updates to a CSV-file (a secondary basic file)
+    $some_windows_updates.PSObject.TypeNames.Insert(0,"Windows Updates (wmic)")
+    $some_windows_updates_selection = $some_windows_updates | Select-Object 'Computer','HotFixID','Type','Install Date','Installed On','installed_on_original','Day','Month','Year','Weekday','Age (Days)','install_date_original','Installed By','Support URL','Custom URL','Comments','Name','In Effect','Status','Node','Number'
+    $some_windows_updates_selection | Sort 'Number','Age (Days)' | Export-Csv "$path\partial_hotfix_list.csv" -Delimiter ";" -NoTypeInformation -Encoding UTF8
+
+} Else {
+    Write-Warning "wmic not responding"
+    $empty_line | Out-String
+    Write-Verbose "Please consider restarting the PowerShell session." -verbose
+    $empty_line | Out-String
+} # Else
 
 
 
@@ -154,14 +158,16 @@ $some_windows_updates_selection | Sort 'Number','Age (Days)' | Export-Csv $path\
 # Source: http://superuser.com/questions/1002015/why-are-get-hotfix-and-wmic-qfe-list-in-powershell-missing-installed-updates
 # Source: https://msdn.microsoft.com/en-us/library/windows/desktop/aa387282(v=vs.85).aspx
 # Source: https://msdn.microsoft.com/en-us/library/windows/desktop/aa386400(v=vs.85).aspx
+Write-Verbose "Invoking the third method (Microsoft Update Client)..."
 $session = New-Object -ComObject Microsoft.Update.Session
 $searcher = $session.CreateUpdateSearcher()
 $number_of_history_events = $searcher.GetTotalHistoryCount()
 
 
-        # Exit if no Windows updates are found.                                               # Credit: Stephane van Gulick: "Get-WindowsUpdates"
+        # Exit if no Windows updates are found                                                # Credit: Stephane van Gulick: "Get-WindowsUpdates"
         If (($number_of_history_events -eq $null) -or ($number_of_history_events -eq 0)) {
             Write-Warning "No updates found."
+            $empty_line | Out-String
             Exit
         } Else {
             $continue = $true
@@ -181,15 +187,28 @@ $install_history = $searcher.QueryHistory(0, $number_of_history_events)
                 $raw_event_date_value = "$($kb_related_event.Date)"
                 $raw_date = $raw_event_date_value.Split(" ")[0]
                 $raw_time = $raw_event_date_value.Split(" ")[1]
-                $raw_month = ($raw_date).Split("/")[0]
-                $raw_day = ($raw_date).Split("/")[1]
-                $raw_year = ($raw_date).Split("/")[2]
-                $event_timestamp = (Get-Date -Day $raw_day -Month $raw_month -Year $raw_year)
+                $month_event = ($raw_date).Split("/")[0]
+                $day_event = ($raw_date).Split("/")[1]
+                $year_event = ($raw_date).Split("/")[2]
+                $date_event = (Get-Date -Day $day_event -Month $month_event -Year $year_event)
+                $category = $kb_related_event.Categories | Select-Object -ExpandProperty Name
+                $uninst_step_count = $kb_related_event | Select-Object -ExpandProperty UninstallationSteps | Select-Object -ExpandProperty Count
+                    If ($uninst_step_count -eq 0) {
+                        $uninstallation = $uninst_step_count
+                    } Else {
+                        $uninstallation = ($kb_related_event | Select-Object -ExpandProperty UninstallationSteps | Select-Object -ExpandProperty _NewEnum)
+                    } # If ($uninst_step_count)
 
-                # Add a HotFixID (KB-value) to the data                                       # Credit: Stephane van Gulick: "Get-WindowsUpdates" and Anna Wang: "Cannot index into a null array"
+
+                # Add a HotFixID (KB-value) to the data
+                #   \S      Any nonwhitespace character (excludes space, tab and carriage return).
+                #   \d      Any decimal digit.
+                # Source: http://powershellcookbook.com/recipe/qAxK/appendix-b-regular-expression-reference
+                # Credit: Stephane van Gulick: "Get-WindowsUpdates": https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43
+                # Credit: Anna Wang: "Cannot index into a null array": https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell
                 If ($kb_related_event.Title -match "KB\d*") {
 
-                            $hotfix_id = $Matches[0]   
+                            $hotfix_id = $Matches[0]
                             If ($hotfix_id.ToLower().Contains("KB".ToLower())) {
                                 $number = [int]$hotfix_id.ToLower().Replace("kb","")
                             } Else {
@@ -200,38 +219,38 @@ $install_history = $searcher.QueryHistory(0, $number_of_history_events)
                     $continue = $true
                 } # Else
 
-
-                            $all_windows_updates += New-Object -TypeName PSCustomObject -Property @{
+                            $all_windows_updates += $obj_event = New-Object -TypeName PSCustomObject -Property @{
 
                                 'HotFixID'                  = $hotfix_id
                                 'Operation'                 = If ( $kb_related_event.Operation -eq 1 ) { "Installation" } ElseIf ( $kb_related_event.Operation -eq 2 ) { "Uninstallation" } Else { $continue = $true }
-                                'Result'                    = (Get-ResultCodeText($kb_related_event.ResultCode))
+                                'Result'                    = $result_code[[int]$kb_related_event.ResultCode]
                                 'HResult'                   = $kb_related_event.HResult
                                 'Unmapped ResultCode'       = $kb_related_event.UnmappedResultCode
-                                'Install Date'              = $event_timestamp.ToShortDateString()
-                                'Installed On'              = Get-Date $event_timestamp -Format yyyyMMdd
+                                'Install Date'              = $date_event.ToShortDateString()
+                                'Installed On'              = Get-Date $date_event -Format yyyyMMdd
                                 'Timestamp'                 = $kb_related_event.Date
-                                'Day'                       = $event_timestamp.Day
-                                'Month'                     = $event_timestamp.Month
-                                'Year'                      = $event_timestamp.Year
+                                'Day'                       = $date_event.Day
+                                'Month'                     = $date_event.Month
+                                'Year'                      = $date_event.Year
                                 'Time'                      = (Get-Date $raw_time).ToShortTimeString()
-                                'Day Of Week'               = $event_timestamp.DayOfWeek
-                                'Age (Days)'                = ($timestamp_today - $event_timestamp).Days
+                                'Weekday'                   = $date_event.DayOfWeek
+                                'Age (Days)'                = ($timestamp_today - $date_event).Days
                                 'Title'                     = $kb_related_event.Title
                                 'Description'               = $kb_related_event.Description
                                 'Operation Code'            = $kb_related_event.Operation
                                 'Result Code'               = $kb_related_event.ResultCode
                                 'Server Selection Code'     = $kb_related_event.ServerSelection
                                 'ClientApplication ID'      = $kb_related_event.ClientApplicationID
-                                'Server Selection'          = (Get-ServerSelectionText($kb_related_event.ServerSelection))
+                                'Server Selection'          = $server_selection[[int]$kb_related_event.ServerSelection]
                                 'ServiceID'                 = $kb_related_event.ServiceID
-                                'Update Identity'           = $kb_related_event.UpdateIdentity
-                                'Uninstallation Steps'      = $kb_related_event.UninstallationSteps
+                                'UpdateID'                  = $kb_related_event.UpdateIdentity | Select-Object -ExpandProperty UpdateID
+                                'RevisionNumber'            = $kb_related_event.UpdateIdentity | Select-Object -ExpandProperty RevisionNumber
+                                'Uninstallation Steps'      = $uninstallation
                                 'Uninstallation Notes'      = $kb_related_event.UninstallationNotes
-                                'Number'                    = $number
                                 'Support URL'               = $kb_related_event.SupportUrl
                                 'Custom URL'                = [string]'http://support.microsoft.com/?kbid=' + $number
-                                'Categories'                = $kb_related_event.Categories
+                                'Category'                  = $category
+                                'Number'                    = $number
                             } # New-Object
 
         } # ForEach $kb_related_event
@@ -239,13 +258,13 @@ $install_history = $searcher.QueryHistory(0, $number_of_history_events)
 
 # Display the installed Windows updates in a pop-up window
 $all_windows_updates.PSObject.TypeNames.Insert(0,"Windows Updates")
-$windows_updates_selection = $all_windows_updates | Select-Object 'HotFixID','Operation','Result','HResult','Unmapped ResultCode','Install Date','Installed On','Timestamp','Day','Month','Year','Time','Day Of Week','Age (Days)','Title','Description','Operation Code','Result Code','Server Selection Code','ClientApplication ID','Server Selection','ServiceID','Update Identity','Uninstallation Steps','Uninstallation Notes','Number','Support URL','Custom URL','Categories'
+$windows_updates_selection = $all_windows_updates | Select-Object 'HotFixID','Operation','Result','HResult','Unmapped ResultCode','Install Date','Installed On','Timestamp','Day','Month','Year','Time','Weekday','Age (Days)','Title','Description','Operation Code','Result Code','Server Selection Code','ClientApplication ID','Server Selection','ServiceID','UpdateID','RevisionNumber','Uninstallation Steps','Uninstallation Notes','Support URL','Custom URL','Category','Number'
 $windows_updates_sorted_selection = $windows_updates_selection | Sort 'Number','Age (Days)'
 $windows_updates_sorted_selection | Out-GridView
 
 
 # Write the installed Windows updates to a CSV-file
-$windows_updates_sorted_selection | Export-Csv $path\installed_windows_updates.csv -Delimiter ";" -NoTypeInformation -Encoding UTF8
+$windows_updates_sorted_selection | Export-Csv "$path\installed_windows_updates.csv" -Delimiter ";" -NoTypeInformation -Encoding UTF8
 
 
 
@@ -324,8 +343,8 @@ retrieve a list of some HotFixIDs installed on the computer and displays the
 results in console (Method 1). A secondary CSV-file (partial_hotfix_list.csv),
 which contains the output of the Windows Management Instrumentation Command-Line
 Utility (WMIC.exe) with the query path of win32_quickfixengineering (which gives
-about the same partial results as the 
-"Get-WmiObject -Class Win32_QuickFixEngineering" command used previously in 
+about the same partial results as the
+"Get-WmiObject -Class Win32_QuickFixEngineering" command used previously in
 Method 1), is written to $path (Method 2).
 
 Get-InstalledWindowsUpdates also uses Windows Update Agent (WUA) API (Method 3)
@@ -368,44 +387,88 @@ http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-locatio
 
     Homepage:           https://github.com/auberginehill/get-installed-windows-updates
     Short URL:          http://tinyurl.com/gtcktwy
-    Version:            1.2
+    Version:            1.3
 
 .EXAMPLE
 ./Get-InstalledWindowsUpdates
-Run the script. Please notice to insert ./ or .\ before the script name.
+Runs the script. Please notice to insert ./ or .\ before the script name.
 
 .EXAMPLE
 help ./Get-InstalledWindowsUpdates -Full
-Display the help file.
+Displays the help file.
 
 .EXAMPLE
-Set-ExecutionPolicy remotesigned
-This command is altering the Windows PowerShell rights to enable script execution for 
-the default (LocalMachine) scope. Windows PowerShell has to be run with elevated rights 
-(run as an administrator) to actually be able to change the script execution properties. 
-The default value of the default (LocalMachine) scope is "Set-ExecutionPolicy restricted".
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+This command is altering the Windows PowerShell rights to enable script execution
+in the default (LocalMachine) scope, and defines the conditions under which Windows
+PowerShell loads configuration files and runs scripts in general. In Windows Vista
+and later versions of Windows, for running commands that change the execution policy
+of the LocalMachine scope, Windows PowerShell has to be run with elevated rights
+(Run as Administrator). The default policy of the default (LocalMachine) scope is
+"Restricted", and a command "Set-ExecutionPolicy Restricted" will "undo" the changes
+made with the original example above (had the policy not been changed before).
+Execution policies for the local computer (LocalMachine) and for the current user
+(CurrentUser) are stored in the registry (at for instance the
+HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ExecutionPolicy key), and remain
+effective until they are changed again. The execution policy for a particular session
+(Process) is stored only in memory, and is discarded when the session is closed.
 
 
     Parameters:
 
-    Restricted      Does not load configuration files or run scripts. Restricted is the default
-                    execution policy.
+    Restricted      Does not load configuration files or run scripts, but permits
+                    individual commands. Restricted is the default execution policy.
 
-    AllSigned       Requires that all scripts and configuration files be signed by a trusted
-                    publisher, including scripts that you write on the local computer.
+    AllSigned       Scripts can run. Requires that all scripts and configuration
+                    files be signed by a trusted publisher, including the scripts
+                    that have been written on the local computer. Risks running
+                    signed, but malicious, scripts.
 
-    RemoteSigned    Requires that all scripts and configuration files downloaded from the Internet
-                    be signed by a trusted publisher.
+    RemoteSigned    Requires a digital signature from a trusted publisher on scripts
+                    and configuration files that are downloaded from the Internet
+                    (including e-mail and instant messaging programs). Does not
+                    require digital signatures on scripts that have been written on
+                    the local computer. Permits running unsigned scripts that are
+                    downloaded from the Internet, if the scripts are unblocked by
+                    using the Unblock-File cmdlet. Risks running unsigned scripts
+                    from sources other than the Internet and signed, but malicious,
+                    scripts.
 
-    Unrestricted    Loads all configuration files and runs all scripts. If you run an unsigned
-                    script that was downloaded from the Internet, you are prompted for permission
-                    before it runs.
+    Unrestricted    Loads all configuration files and runs all scripts.
+                    Warns the user before running scripts and configuration files
+                    that are downloaded from the Internet. Not only risks, but
+                    actually permits, eventually, running any unsigned scripts from
+                    any source. Risks running malicious scripts.
 
     Bypass          Nothing is blocked and there are no warnings or prompts.
+                    Not only risks, but actually permits running any unsigned scripts
+                    from any source. Risks running malicious scripts.
 
-    Undefined       Removes the currently assigned execution policy from the current scope.
-                    This parameter will not remove an execution policy that is set in a Group
-                    Policy scope.
+    Undefined       Removes the currently assigned execution policy from the current
+                    scope. If the execution policy in all scopes is set to Undefined,
+                    the effective execution policy is Restricted, which is the
+                    default execution policy. This parameter will not alter or
+                    remove the ("master") execution policy that is set with a Group
+                    Policy setting.
+    __________
+    Notes: 	      - Please note, that the Group Policy setting "Turn on Script Execution"
+                    overrides the execution policies set in Windows PowerShell in all
+                    scopes. To find this ("master") setting, please, for example, open
+                    the Local Group Policy Editor (gpedit.msc) and navigate to
+                    Computer Configuration > Administrative Templates >
+                    Windows Components > Windows PowerShell.
+
+                  - The Local Group Policy Editor (gpedit.msc) is not available in any
+                    Home or Starter editions of Windows.
+
+                  - Group Policy setting "Turn on Script Execution":
+
+                    Not configured 	                                        : No effect, the default
+                                                                               value of this setting
+                    Disabled 	                                            : Restricted
+                    Enabled - Allow only signed scripts 	                : AllSigned
+                    Enabled - Allow local scripts and remote signed scripts : RemoteSigned
+                    Enabled - Allow all scripts 	                        : Unrestricted
 
 
 For more information, please type "Get-ExecutionPolicy -List", "help Set-ExecutionPolicy -Full",
@@ -427,11 +490,12 @@ For more information, please type "help New-Item -Full".
 http://social.technet.microsoft.com/wiki/contents/articles/4197.how-to-list-all-of-the-windows-and-software-updates-applied-to-a-computer.aspx
 https://blogs.technet.microsoft.com/heyscriptingguy/2004/09/29/how-can-i-tell-which-service-packs-have-been-installed-on-a-computer/
 https://gallery.technet.microsoft.com/Get-WindowsUpdates-06eb7f43
-https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell
+https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cfca802b/cannot-index-into-a-null-array?forum=winserverpowershell         # Anna Wang: "Cannot index into a null array"
 https://gallery.technet.microsoft.com/ScriptCenter/d86cd93b-2428-40a1-a430-26bd3caed36f/
 http://blog.powershell.no/2010/06/25/manage-windows-update-installations-using-windows-powershell/
 http://blog.crayon.no/blogs/janegil/archive/2010/06/25/manage_2D00_windows_2D00_update_2D00_installations_2D00_using_2D00_windows_2D00_powershell.aspx
 https://blogs.technet.microsoft.com/jamesone/2009/01/27/managing-windows-update-with-powershell/
+http://powershellcookbook.com/recipe/qAxK/appendix-b-regular-expression-reference
 http://www.ehow.com/how_8724332_use-powershell-run-windows-updates.html
 https://msdn.microsoft.com/en-us/library/aa387287(v=VS.85).aspx
 https://msdn.microsoft.com/en-us/library/windows/desktop/aa387095(v=vs.85).aspx
