@@ -338,14 +338,14 @@ https://social.technet.microsoft.com/Forums/en-US/99581c8b-4814-4419-8f4b-34f9cf
 Retrieves a list of all installed Windows updates on a local machine.
 
 .DESCRIPTION
-Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI) (with
-a command "Get-WmiObject -Class Win32_QuickFixEngineering") to retrieve a list of
-some HotFixIDs installed on a local machine and displays the results in console
-(Method 1). The Windows Management Instrumentation Command-Line Utility (WMIC.exe
-with the query path of win32_quickfixengineering) is then used to write a secondary
-CSV-file (partial_hotfix_list.csv) to $path (Method 2) - this secondary CSV-file
-(populated by WMIC.exe) contains about the same partial results as which were
-obtained by using the previous query (Method 1).
+Get-InstalledWindowsUpdates uses Windows Management Instrumentation (WMI, with
+a command "Get-WmiObject -Class Win32_QuickFixEngineering" (Method 1)) to
+retrieve a list of some HotFixIDs installed on a local machine and displays
+the results in console. The Windows Management Instrumentation Command-Line Utility
+(WMIC.exe with the query path of win32_quickfixengineering (Method 2)) is then used
+to write a secondary CSV-file (partial_hotfix_list.csv) to $path - this secondary
+CSV-file populated by WMIC.exe contains about the same partial results as which were
+obtained by using the previous Method 1.
 
 Finally, Get-InstalledWindowsUpdates uses Windows Update Agent (WUA) API (Method 3)
 to retrieve a third - comprehensive - list of all the installed and uninstalled
@@ -459,7 +459,7 @@ effective until they are changed again. The execution policy for a particular se
                     Windows Components > Windows PowerShell.
 
                   - The Local Group Policy Editor (gpedit.msc) is not available in any
-                    Home or Starter editions of Windows.
+                    Home or Starter edition of Windows.
 
                   - Group Policy setting "Turn on Script Execution":
 
