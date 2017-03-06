@@ -174,7 +174,7 @@
                            <li>Right click Computer icon and select Properties (or select Start → Control Panel → System. On Windows 10 this instance may also be found by right clicking Start and selecting Control Panel → System... or by pressing <code>[Win-key]</code> + X and selecting Control Panel → System). On the window with basic information about the computer...</li>
                            <li>Click on Advanced system settings on the left panel and select Advanced tab on the "System Properties" pop-up window.</li>
                            <li>Click on the button near the bottom labeled Environment Variables.</li>
-                           <li>In the topmost section labeled User variables both TMP and TEMP may be seen. Each different login account is assigned its own temporary locations. These values can be changed by double clicking a value or by highlighting a value and selecting Edit. The specified path will be used by Windows and many other programs for temporary files. It's advisable to set the same value (a directory path) for both TMP and TEMP.</li>
+                           <li>In the topmost section, which lists the User variables, both TMP and TEMP may be seen. Each different login account is assigned its own temporary locations. These values can be changed by double clicking a value or by highlighting a value and selecting Edit. The specified path will be used by Windows and many other programs for temporary files. It's advisable to set the same value (a directory path) for both TMP and TEMP.</li>
                            <li>Any running programs need to be restarted for the new values to take effect. In fact, probably Windows itself needs to be restarted for it to begin using the new values for its own temporary files.</li>
                         </ol>
                     </li>
@@ -249,7 +249,7 @@
                                         <th></th>
                                         <td colspan="2" style="padding:6px">
                                             <ul>
-                                                <li><span style="font-size: 95%">The Local Group Policy Editor (<code>gpedit.msc</code>) is not available in any Home or Starter editions of Windows.</span></li>
+                                                <li><span style="font-size: 95%">The Local Group Policy Editor (<code>gpedit.msc</code>) is not available in any Home or Starter edition of Windows.</span></li>
                                                 <ol>
                                                     <p>
                                                         <table>
@@ -320,7 +320,7 @@
     </tr>
     <tr>
         <td style="padding:6px"><strong>Editing Source Files:</strong></td>
-        <td style="padding:6px">New features, fixes and other potential changes can be discussed further by opening a new <a href="https://github.com/auberginehill/get-installed-windows-updates/pulls">pull request</a>.</td>
+        <td style="padding:6px">New features, fixes and other potential changes can be discussed in further detail by opening a new <a href="https://github.com/auberginehill/get-installed-windows-updates/pulls">pull request</a>.</td>
     </tr>
 </table>
 
